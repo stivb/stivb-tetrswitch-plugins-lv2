@@ -33,6 +33,23 @@ typedef struct {
 
     float* inverters[TOTAL_OUTPUTS];
 
+    float* channel;
+
+    struct {
+    LV2_Atom_Event event; // Base LV2 atom event
+    uint8_t channel;      // MIDI channel (0-15)
+    uint8_t controller;   // MIDI control change number (0-127)
+    uint8_t value;        // MIDI control change value (0-127)
+    } ccEvent[TOTAL_PRESETS];
+
+    float* midi_cc[TOTAL_PRESETS];
+
+    float* midi_changes_only;
+
+    uint8_t prev_midi_cc_values[TOTAL_PRESETS];
+
+    LV2_Atom_Sequence*   midi_out;
+
     InternalState internal_state;
 
     LV2_Controller* lv2;
