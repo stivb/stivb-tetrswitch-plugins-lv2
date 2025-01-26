@@ -18,14 +18,14 @@ instantiate(const LV2_Descriptor*     descriptor,
             const char*               bundle_path,
             const LV2_Feature* const* features)
 {
+    
+    
     Controller* self = Controller_instantiate();
 
     self->lv2 = LV2_Controller_instantiate();
 
-    self->lv2->uris.midi_Event = self->lv2->map->map(self->lv2->map->handle, LV2_MIDI__MidiEvent);
-    self->lv2->uris.atom_Sequence = self->lv2->map->map(self->lv2->map->handle, LV2_ATOM__Sequence);
+    lv2_log_note(&self->lv2->logger, "Instantiation started\n");
 
-    
 
     const char* missing = self->lv2->initialize(self->lv2, features);
 
@@ -45,6 +45,8 @@ instantiate(const LV2_Descriptor*     descriptor,
 
 static void connect_port(LV2_Handle instance, uint32_t port, void* data) {
     Controller* self = (Controller*) instance;
+
+    lv2_log_note(&self->lv2->logger, "Reading port %u \n", port);
 
     switch ((PortIndex) port) {
         case OUTPUT_CV_1:

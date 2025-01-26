@@ -62,7 +62,7 @@ Controller* Controller_instantiate() {
     self->internal_state.previous_preset_mask = self->internal_state.current_preset_mask;
     self->internal_state.preset_changed = false;
 
-    memset(self->prev_midi_cc_values, 0, sizeof(self->prev_midi_cc_values));
+    //memset(self->prev_midi_cc_values, 0, sizeof(self->prev_midi_cc_values));
 
     
 
