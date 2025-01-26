@@ -9,6 +9,9 @@
 #include "lv2/midi/midi.h"
 #include "lv2/atom/forge.h"
 #include "lv2/atom/atom.h"
+#include "lv2/urid/urid.h"
+
+
 
 
 bool Controller_is_preset_changed(void* self);
@@ -205,6 +208,7 @@ void Controller_update_output_cvs(Controller* self, uint32_t n_samples) {
 
 void Controller_Emit_MidiCCs(Controller* self) {
     float output_cv_values[TOTAL_OUTPUTS];
+    
     unsigned int output_coded = self->get_output_signal(self);
 
     for (unsigned int n = 0; n < TOTAL_OUTPUTS; n++) {
@@ -212,12 +216,20 @@ void Controller_Emit_MidiCCs(Controller* self) {
         output_cv_values[n] = ((output_coded & mask) >> n) * MAX_TENSION;
     }
     const uint32_t out_capacity = self->midi_out->atom.size;
+    lv2_atom_sequence_clear(self->midi_out);
+
+    self->midi_out->atom.type = self->lv2->uris.atom_Sequence; 
+
     for (unsigned int i = 0; i < TOTAL_OUTPUTS; i++) {
         uint8_t newVal = (output_cv_values[i] >= (MAX_TENSION / 2)) ? 127 : 0;
         if (newVal == self->prev_midi_cc_values[i] && *self->midi_changes_only) {
             continue;
         }
         self->prev_midi_cc_values[i] = newVal;
+        self->ccEvent[i].event.time.frames = 0;
+        
+        self->ccEvent[i].event.body.type = self->lv2->uris.midi_Event;
+        self->ccEvent[i].event.body.size= 3; 
         self->ccEvent[i].value = newVal;
         self->ccEvent[i].channel = (uint8_t) 0xB0 |(uint8_t) *self->channel; ;
         self->ccEvent[i].controller = (uint8_t) *self->midi_cc[i];

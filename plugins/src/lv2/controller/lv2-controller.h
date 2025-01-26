@@ -3,6 +3,7 @@
 
 #include "lv2/log/logger.h"
 #include "lv2/atom/atom.h"
+#include "lv2/midi/midi.h"
 
 #include "../extension/lv2-hmi.h"
 #include "../extension/control-input-port-change-request.h"
@@ -18,13 +19,7 @@ typedef struct {
     LV2_HMI_Addressing notifiers[TOTAL_CONTROLLER_NOTIFIERS];
 } HMI;
 
-typedef struct {
-    // Types
-    //LV2_URID atom_String;
 
-    // Values
-    LV2_URID atom_presets_label[TOTAL_PRESETS];
-} URIs;
 
 typedef struct {
     char presets_label[TOTAL_PRESETS][PRESET_LABEL_MAX_SIZE];
@@ -36,9 +31,18 @@ typedef struct {
     const LV2_Atom_Sequence* events_in;
 
     // State
-    URIs uris;
+    
     State state;
-} Controller_Atom;
+}   Controller_Atom;
+
+typedef struct {
+  LV2_URID atom_Sequence;
+  LV2_URID midi_Event;
+} MIDI_URIs;
+
+
+
+
 
 typedef struct {
     LV2_URID_Map* map;
@@ -47,6 +51,8 @@ typedef struct {
 
     /** LV2 Logging */
     LV2_Log_Logger logger;
+
+    MIDI_URIs uris;
 
     /** Mod HMI */
     HMI hmi;

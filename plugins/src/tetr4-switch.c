@@ -22,6 +22,11 @@ instantiate(const LV2_Descriptor*     descriptor,
 
     self->lv2 = LV2_Controller_instantiate();
 
+    self->lv2->uris.midi_Event = self->lv2->map->map(self->lv2->map->handle, LV2_MIDI__MidiEvent);
+    self->lv2->uris.atom_Sequence = self->lv2->map->map(self->lv2->map->handle, LV2_ATOM__Sequence);
+
+    
+
     const char* missing = self->lv2->initialize(self->lv2, features);
 
     if (missing) {
