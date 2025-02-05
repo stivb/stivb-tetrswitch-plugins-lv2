@@ -24,7 +24,7 @@ instantiate(const LV2_Descriptor*     descriptor,
 
     self->lv2 = LV2_Controller_instantiate();
 
-    lv2_log_note(&self->lv2->logger, "Instantiation started\n");
+    //lv2_log_note(&self->lv2->logger, "Instantiation started\n");
 
 
     const char* missing = self->lv2->initialize(self->lv2, features);

@@ -41,6 +41,12 @@ typedef struct {
 } MIDI_URIs;
 
 
+static inline void
+map_midi_uris( LV2_URID_Map* map, MIDI_URIs* uris)
+{
+  uris->atom_Sequence      = map->map(map->handle, LV2_ATOM__Sequence);
+  uris->midi_Event         = map->map(map->handle, LV2_MIDI__MidiEvent);
+}
 
 
 
