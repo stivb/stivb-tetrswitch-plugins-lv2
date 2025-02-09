@@ -38,10 +38,10 @@ typedef struct {
     float* channel;
 
     struct {
-    LV2_Atom_Event event; // Base LV2 atom event
-    uint8_t channel;      // MIDI channel (0-15)
-    uint8_t controller;   // MIDI control change number (0-127)
-    uint8_t value;        // MIDI control change value (0-127)
+        LV2_Atom_Event event; // Base LV2 atom event
+        uint8_t channel;      // MIDI channel (0-15)
+        uint8_t controller;   // MIDI control change number (0-127)
+        uint8_t value;        // MIDI control change value (0-127)
     } ccEvent[TOTAL_PRESETS];
 
     float* midi_cc[TOTAL_PRESETS];

@@ -19,7 +19,13 @@ typedef struct {
     LV2_HMI_Addressing notifiers[TOTAL_CONTROLLER_NOTIFIERS];
 } HMI;
 
+typedef struct {
+    // Types
+    //LV2_URID atom_String;
 
+    // Values
+    LV2_URID atom_presets_label[TOTAL_PRESETS];
+} URIs;
 
 typedef struct {
     char presets_label[TOTAL_PRESETS][PRESET_LABEL_MAX_SIZE];
@@ -33,11 +39,11 @@ typedef struct {
     // State
     
     State state;
-}   Controller_Atom;
+} Controller_Atom;
 
 typedef struct {
-  LV2_URID atom_Sequence;
-  LV2_URID midi_Event;
+    LV2_URID atom_Sequence;
+    LV2_URID midi_Event;
 } MIDI_URIs;
 
 
